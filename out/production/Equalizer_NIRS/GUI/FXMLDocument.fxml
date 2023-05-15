@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400" prefWidth="900"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="GUI.FXMLDocumentController">
+    <children>
+
+        <Label layoutX="5.0" layoutY="145.0" text="Эквалайзер " textFill="#fefefe"/>
+        <HBox layoutX="5.0" layoutY="175.0" prefHeight="40" prefWidth="960">
+            <children>
+                <Label prefWidth="120" text="0-100 Hz" textFill="#fefefe"/>
+                <Label prefWidth="120" text="100-1047 Hz" textFill="#fefefe"/>
+                <Label prefWidth="120" text="1047-2443 Hz" textFill="#fefefe"/>
+                <Label prefWidth="120" text="2443-5412 Hz" textFill="#fefefe"/>
+                <Label prefWidth="120" text="5412-11061 Hz" textFill="#fefefe"/>
+                <Label prefWidth="120" text="11061-22000 Hz" textFill="#fefefe"/>
+            </children>
+        </HBox>
+        <HBox layoutX="5.0" layoutY="200.0" prefHeight="150" prefWidth="960">
+            <children>
+                <Slider fx:id="Slider0" max="1" min="0.00025" orientation="VERTICAL" prefWidth="120"
+                        showTickLabels="true" showTickMarks="true"/>
+                <Slider fx:id="Slider1" max="1" min="0.00025" orientation="VERTICAL" prefWidth="120"
+                        showTickLabels="true" showTickMarks="true"/>
+                <Slider fx:id="Slider2" max="1" min="0.00025" orientation="VERTICAL" prefWidth="120"
+                        showTickLabels="true" showTickMarks="true"/>
+                <Slider fx:id="Slider3" max="1" min="0.00025" orientation="VERTICAL" prefWidth="120"
+                        showTickLabels="true" showTickMarks="true"/>
+                <Slider fx:id="Slider4" max="1" min="0.00025" orientation="VERTICAL" prefWidth="120"
+                        showTickLabels="true" showTickMarks="true"/>
+                <Slider fx:id="Slider5" max="1" min="0.00025" orientation="VERTICAL" prefWidth="120"
+                        showTickLabels="true" showTickMarks="true"/>
+            </children>
+        </HBox>
+        <HBox layoutX="5.0" layoutY="265.0" prefHeight="50" prefWidth="960">
+            <children>
+                <Label fx:id="Label0" prefWidth="120" textFill="WHITE"/>
+                <Label fx:id="Label1" prefWidth="120" textFill="WHITE"/>
+                <Label fx:id="Label2" prefWidth="120" textFill="WHITE"/>
+                <Label fx:id="Label3" prefWidth="120" textFill="WHITE"/>
+                <Label fx:id="Label4" prefWidth="120" textFill="WHITE"/>
+                <Label fx:id="Label5" prefWidth="120" textFill="WHITE"/>
+            </children>
+
+        </HBox>
+        <Label layoutX="270" layoutY="10" text="Панель управления"/>
+        <Button fx:id="button_select" layoutX="145" layoutY="40.0" onAction="#open" prefHeight="40.0" prefWidth="70.0"
+                text="Open"/>
+        <Button fx:id="button_play" layoutX="225" layoutY="40.0" onAction="#play" prefHeight="40.0" prefWidth="70.0"
+                text="Play"/>
+        <Button fx:id="button_pause" layoutX="305" layoutY="40.0" onAction="#pause" prefHeight="40.0" prefWidth="70.0"
+                text="Pause"/>
+        <Button fx:id="button_stop" layoutX="385" layoutY="40.0" onAction="#stop" prefHeight="40.0" prefWidth="70.0"
+                text="Reset"/>
+        <Button fx:id="buttonClose" layoutX="465" layoutY="40.0" maxWidth="110" onAction="#clickClose"
+                prefHeight="40.0" prefWidth="70.0" text="Close"/>
+
+        <Label layoutX="280" layoutY="90" text="Общая громкость" textFill="#fefefe"/>
+        <Slider fx:id="soundSlider" layoutX="270" layoutY="110" max="1.5"
+                prefHeight="25.0" prefWidth="155.0" value="0.5">
+        </Slider>
+
+        <Label layoutX="750" layoutY="225" text="Панель эффектов" textFill="#fefefe"/>
+        <CheckBox layoutX="750.0" layoutY="250.0" onAction="#chorusBox" text="Chorus" textFill="#fefefe"/>
+        <CheckBox layoutX="750.0" layoutY="280.0" onAction="#overdriveBox" text="Envelope" textFill="#fefefe"/>
+
+    </children>
+</AnchorPane>
