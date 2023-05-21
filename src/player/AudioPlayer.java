@@ -1,5 +1,7 @@
 package player;
 
+import equalizer.Filter;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +11,9 @@ public class AudioPlayer {
     private SourceDataLine sourceDataLine;
     public static final int BUFF_SIZE = 32000;
     private final byte[] bufferBytes  = new byte[BUFF_SIZE];
-    private final short[] bufferShort = new short[BUFF_SIZE / 2];
+    private short[] bufferShort = new short[BUFF_SIZE / 2];
+    private final Filter filter;
+    private boolean isFilter;
     private AudioInputStream audioStream;
     private boolean pauseStatus;
     private final File currentMusicFile;
@@ -17,6 +21,8 @@ public class AudioPlayer {
 
     public AudioPlayer(File musicFile) {
         this.currentMusicFile = musicFile;
+        this.filter = new Filter();
+        this.isFilter = false;
     }
 
 
@@ -36,7 +42,9 @@ public class AudioPlayer {
                     this.pause();
                 if (this.stopStatus)
                     break;
-                this.SampleArrayByteArray();
+                if(this.isFilter)
+                    this.bufferShort = this.filter.filtering(this.bufferShort);
+                this.SampleArrayToByteArray();
                 this.sourceDataLine.write(this.bufferBytes, 0, this.bufferBytes.length);
             }
             this.sourceDataLine.drain();
@@ -80,18 +88,25 @@ public class AudioPlayer {
     }
 
     private void ByteArrayToSamplesArray() {
-        // (32000/BUFF_SIZE - 1) используется для образования щелчков между отсчетами при уменьшении размера буффера
-        for (int i = 0, j = 0; i < this.bufferBytes.length - (32000/BUFF_SIZE - 1); i += 2, j++) {
+        for (int i = 0, j = 0; i < this.bufferBytes.length; i += 2, j++) {
             this.bufferShort[j] = (short) ((ByteBuffer.wrap(this.bufferBytes, i, 2).order(
                     java.nio.ByteOrder.LITTLE_ENDIAN).getShort() / 2));
         }
     }
 
-    private void SampleArrayByteArray() {
-        // (32000/BUFF_SIZE - 1) используется для образования щелчков между отсчетами при уменьшении размера буффера
-        for (int i = 0, j = 0; i < this.bufferShort.length && j < (this.bufferBytes.length - (32000/BUFF_SIZE - 1)); i++, j += 2) {
+    private void SampleArrayToByteArray() {
+        for (int i = 0, j = 0; i < this.bufferShort.length && j < this.bufferBytes.length; i++, j += 2) {
             this.bufferBytes[j] = (byte) (this.bufferShort[i]);
             this.bufferBytes[j + 1] = (byte) (this.bufferShort[i] >>> 8);
         }
     }
+
+    public boolean filterIsActive() {
+        return this.isFilter;
+    }
+
+    public void setFilter(boolean b) {
+        this.isFilter = b;
+    }
+
 }
