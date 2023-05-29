@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400" prefWidth="710"
+<AnchorPane id="AnchorPane" prefHeight="400" prefWidth="865"
             xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="GUI.FXMLDocumentController">
     <children>
@@ -58,6 +58,10 @@
         <Slider fx:id="soundSlider" layoutX="270" layoutY="110" max="1.5"
                 prefHeight="25.0" prefWidth="155.0" value="0.5">
         </Slider>
+
+        <Label layoutX="720" layoutY="225" text="Панель эффектов" textFill="#fefefe"/>
+        <CheckBox layoutX="720.0" layoutY="250.0" onAction="#chorusBox" text="Chorus" textFill="#fefefe"/>
+        <CheckBox layoutX="720.0" layoutY="280.0" onAction="#delayBox" text="Envelope" textFill="#fefefe"/>
 
     </children>
 </AnchorPane>

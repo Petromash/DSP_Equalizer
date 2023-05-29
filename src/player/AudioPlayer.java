@@ -1,6 +1,10 @@
 package player;
 
+import effects.Chorus;
+import effects.Delay;
 import equalizer.Equalizer;
+import equalizer.Filter;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +22,19 @@ public class AudioPlayer {
     private boolean stopStatus;
     private double gain;
     private final Equalizer equalizer;
+    private final Chorus chorus;
+    private boolean isChorus;
+    private final Delay delay;
+    private boolean isDelay;
 
     public AudioPlayer(File musicFile) {
         this.currentMusicFile = musicFile;
         this.equalizer = new Equalizer();
         this.gain = 1.0;
+        this.isDelay = false;
+        this.delay = new Delay();
+        this.isChorus = false;
+        this.chorus = new Chorus();
     }
 
 
@@ -42,6 +54,14 @@ public class AudioPlayer {
                 if (this.pauseStatus) this.pause();
 
                 if (this.stopStatus) break;
+
+                if (this.isDelay) {
+                    this.delay(this.bufferShort);
+                }
+
+                if (this.isChorus) {
+                    this.chorus(this.bufferShort);
+                }
 
                 equalizer.setInputSignal(this.bufferShort);
                 this.equalizer.equalization();
@@ -109,6 +129,32 @@ public class AudioPlayer {
 
     public Equalizer getEqualizer() {
         return this.equalizer;
+    }
+
+    private void delay(short[] inputSamples) {
+        this.delay.setInputSampleStream(inputSamples);
+        this.delay.createEffect();
+    }
+
+    public boolean delayIsActive() {
+        return this.isDelay;
+    }
+
+    public void setDelay(boolean b) {
+        this.isDelay = b;
+    }
+
+    private void chorus(short[] inputSamples) throws ExecutionException, InterruptedException {
+        chorus.setInputSampleStream(inputSamples);
+        chorus.createEffect();
+    }
+
+    public boolean ChorusIsActive() {
+        return this.isChorus;
+    }
+
+    public void setChorus(boolean b) {
+        this.isChorus = b;
     }
 
 }
